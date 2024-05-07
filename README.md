@@ -20,8 +20,6 @@ Als Entwickler möchte ich eine erweiterte Version des Game of Life entwickeln, 
 ### Abhängigkeiten:
 -	Verfügbarkeit von Ressourcen für die Entwicklung und Testphase.
 -	Abhängigkeit von externen Bibliotheken wie log4j für das Logging.
-### Aufwand:
-Der Aufwand beträgt ca. 15-20 Wochen
 ### Annahmebedingungen:
 -	Vorhandensein einer geeigneten Entwicklungsplattform für die Java-Entwicklung.
 -	Zugriff auf erforderliche Ressourcen wie Java Swing/AWT, Log4j-Framework usw.
