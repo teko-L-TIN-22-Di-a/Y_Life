@@ -1,8 +1,8 @@
 # Y_Life
 
-## ID:
+### ID:
 EPIC-2024-05-06-Y-Life
-## Titel: 
+### Titel: 
 Y-Life: Das etwas fragwürdige Game of Life
 ## Hintergrund:
 Das Projekt zielt darauf ab, das klassische Conway's Game of Life etwas abzuwandeln und durch Erweiterungen zu ergänzen. Durch die Nutzung von Java Swing/AWT wird eine interaktive grafische Benutzeroberfläche geschaffen, die es dem Benutzer ermöglicht, die Simulation zu beobachten und sogar zu beeinflussen.
