@@ -1,6 +1,5 @@
 # Y_Life
 
-### Y-Game-of-Life
 ### Hintergrund:
 Das Projekt zielt darauf ab, das klassische Conway's Game of Life etwas abzuwandeln um neue Kentnisse in der Programmiersprache Java, Swing/AWT und DesignPatterns zu erhalten.
 ### Beschreibung:
@@ -12,3 +11,14 @@ Startzustand festlegen: Festlegen einer beliebigen Anzahl aus lebenden Schaffen.
 Evolution: Anwendung einfacher Regeln auf alle Schafe und den Wolf, um ihren Zustand in jedem Schritt zu aktualisieren.
 Simulationsschritt ausführen: Durchführung der Evolution für alle Tiere gleichzeitig.
 Interaktion: Möglichkeit für den Benutzer,den Wolf zu steuern.
+
+### Die States des Game of Life
+In diesem Projekt ist dies die momentane Logik welche die Schafe befolgen
+![img.png](img.png)
+
+### Weitere States
+Der Wolf wird vom Spieler bewegt und (wird) die folgenden States enthalten
+![img_1.png](img_1.png)
+
+### (Draft) Klassendiagramm
+![img_2.png](img_2.png)
