@@ -15,7 +15,7 @@ public class WolfAndSheepGame {
         GameModel model = new GameModel();
         GameView view = new GameView(model);
         ScoreView scoreView = new ScoreView(model);
-        GameController controller = new GameController(model, view, scoreView);
+        new GameController(model, view, scoreView);
 
         JFrame frame = new JFrame("Wolf and Sheep");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

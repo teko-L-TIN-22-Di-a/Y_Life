@@ -8,6 +8,8 @@ import java.util.Random;
 public class GameModel {
     public static final int GRID_WIDTH = 40;
     public static final int GRID_HEIGHT = 30;
+
+    //Konstanten, die den Zustand einer Zelle im Gitter repräsentieren
     public static final int SHEEP = 1;
     public static final int EMPTY = 0;
 
@@ -63,7 +65,8 @@ public class GameModel {
     }
 
     /**
-     * Bewegt den Wolf um die angegebenen Verschiebungen.
+     * Diese Methode bewegt den Wolf um dx und dy im Gitter.
+     * Sie aktualisiert die Position des Wolfes und zählt gefressene Schafe, wenn der Wolf auf eine Schafzelle trifft.
      *
      * @param dx die Verschiebung in x-Richtung
      * @param dy die Verschiebung in y-Richtung
