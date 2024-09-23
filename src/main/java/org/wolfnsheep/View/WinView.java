@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * Anzeige wenn der Benutzer alle Schafe gefressen oder ausgelöscht hat
+ */
 public class WinView extends JPanel implements ActionListener {
     private final JFrame frame;
     private final int score;

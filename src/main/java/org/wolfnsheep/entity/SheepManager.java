@@ -4,6 +4,10 @@ import org.wolfnsheep.GameModel;
 
 import java.util.Random;
 
+/**
+ * Initialisiert Schafe mit der Game of life Logik
+ * Beinhaltet alle Logik rund um die Schaffe
+ */
 public class SheepManager {
 
     public static final int SHEEP = 1;
@@ -16,6 +20,9 @@ public class SheepManager {
         this.game = game;
     }
 
+    /**
+     * Generiert Random anzahl Schafe
+     */
     public void populateGridWithSheep() {
         if(eatenSheepCount == 0){
             sheepCount=0;
@@ -30,10 +37,16 @@ public class SheepManager {
         }
     }
 
+    /**
+     * Anzahl gegessener Schafe
+     */
     public static void setEatenSheepCount() {
         eatenSheepCount ++;
     }
 
+    /**
+     * Setzt Counter zurück
+     */
     public static void resetCounter(){
         //sheepCount = 0;
         eatenSheepCount=0;
@@ -51,6 +64,9 @@ public class SheepManager {
     }
 
 
+    /**
+     * Aktualisiert die Schafe via der Game of Life Logik
+     */
     public void updateSheepPopulation() {
         int[][] newGrid = new int[GameModel.GRID_WIDTH][GameModel.GRID_HEIGHT];
 
@@ -81,6 +97,12 @@ public class SheepManager {
         }
     }
 
+    /**
+     * Zählt die Nachbaren einer Zelle
+     * @param x x-Koordinate des Schafs/Zeile
+     * @param y y-Koordinate des Schafs/Zeile
+     * @return anzahl Nachbaren
+     */
     private int countNeighbors(int x, int y) {
         int count = 0;
         for (int i = -1; i <= 1; i++) {
