@@ -11,13 +11,14 @@ import java.awt.*;
  */
 public class WolfAndSheepGame {
 
+    static JFrame frame = new JFrame("WolfAndSheep");
+
     public static void main(String[] args) {
-        GameModel model = new GameModel();
+        GameModel model = new GameModel(frame);
         GameView view = new GameView(model);
         ScoreView scoreView = new ScoreView(model);
         new GameController(model, view, scoreView);
 
-        JFrame frame = new JFrame("Wolf and Sheep");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.getContentPane().add(view, BorderLayout.CENTER);

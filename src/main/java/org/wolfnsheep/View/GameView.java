@@ -1,6 +1,7 @@
 package org.wolfnsheep.View;
 
 import org.wolfnsheep.GameModel;
+import org.wolfnsheep.entity.SheepManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.*;
  * Das GameView stellt die grafische Darstellung des Spiels bereit.
  */
 public class GameView extends JPanel {
-    private GameModel model;
+    private final GameModel model;
 
     /**
      * Konstruktor für die GameView, der das Modell setzt und die Grösse der Ansicht festlegt.
@@ -31,7 +32,7 @@ public class GameView extends JPanel {
 
         for (int i = 0; i < GameModel.GRID_WIDTH; i++) {
             for (int j = 0; j < GameModel.GRID_HEIGHT; j++) {
-                if (model.getCell(i, j) == GameModel.SHEEP) {
+                if (model.getCell(i, j) == SheepManager.SHEEP) {
                     g.setColor(Color.WHITE);
                 } else if (model.getCell(i, j) == -1) { // Wolf
                     g.setColor(Color.RED);
