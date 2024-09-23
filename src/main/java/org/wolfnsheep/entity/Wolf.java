@@ -7,16 +7,22 @@ import javax.swing.*;
 
 public class Wolf {
     private int x, y;
-    private int eatenSheepCount = 0;
-    private int energy = 10; // Wolf startet mit voller Energie
+    private int energy = 10;
     private final GameModel game;
-    private int moveCooldown = 1; // Standardbewegungsgeschwindigkeit in Millisekunden
-    private long lastMoveTime;
-    private final JFrame frame; // Referenz auf das JFrame
+    private final JFrame frame;
 
     public static final int MAX_ENERGY = 100;
     public static final int ENERGY_LOSS_RATE = 1;
     public static final int ENERGY_GAIN_FROM_SHEEP = 5;
+
+    /**
+     * Enthält alle Logik die zum Wolf gehört
+     * Die Bewegung, die Position, die Anzahl gefressener Schaffe und
+     * @param startX
+     * @param startY
+     * @param game
+     * @param frame
+     */
 
     public Wolf(int startX, int startY, GameModel game, JFrame frame) {
         this.x = startX;
@@ -24,52 +30,52 @@ public class Wolf {
         this.game = game;
         this.frame = frame; // Rahmen für den Game Over Screen
         game.setCell(x, y, -1); // Set Wolf position in the grid
-        lastMoveTime = System.currentTimeMillis();
     }
 
+    /**
+     * Steuerung des Wolfs
+     * @param dx
+     * @param dy
+     */
     public void move(int dx, int dy) {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastMoveTime < moveCooldown) {
-            return; // Wenn der Wolf zu schnell bewegt wird, blockiere die Bewegung
-        }
-
         int newX = Math.max(0, Math.min(GameModel.GRID_WIDTH - 1, x + dx));
         int newY = Math.max(0, Math.min(GameModel.GRID_HEIGHT - 1, y + dy));
 
+        eatSheepWhenOnNewPosition(newX, newY);
+        setNewPosition(newX, newY);
+        decreaseEnergy();
+    }
+
+    private void setNewPosition(int newX, int newY) {
+        game.setCell(x, y, 0);
+        x = newX;
+        y = newY;
+        game.setCell(x, y, -1);
+    }
+
+    private void eatSheepWhenOnNewPosition(int newX, int newY) {
         if (game.getCell(newX, newY) == SheepManager.SHEEP) {
             eatSheep();
         }
-
-        game.setCell(x, y, 0); // Clear old position
-        x = newX;
-        y = newY;
-        game.setCell(x, y, -1); // Set new position
-
-        // Energie verringern und überprüfen, ob der Wolf stirbt
-        decreaseEnergy();
-        adjustSpeedBasedOnEnergy();
-        lastMoveTime = currentTime;
     }
 
+    /**
+     * Schaf wurde gefressen
+     * Anzahl gefressener Schafe erhöht sich
+     * Energie wird erhöht
+     */
     private void eatSheep() {
-        eatenSheepCount++;
-        energy = Math.min(energy + ENERGY_GAIN_FROM_SHEEP, MAX_ENERGY); // Max 100 Energie
+        SheepManager.setEatenSheepCount();
+        energy = Math.min(energy + ENERGY_GAIN_FROM_SHEEP, MAX_ENERGY);
     }
 
+    /**
+     * Wolf stirbt, wenn Energie auf 0 sinkt
+     */
     private void decreaseEnergy() {
         energy -= ENERGY_LOSS_RATE;
         if (energy <= 0) {
-            die(); // Wolf stirbt, wenn Energie auf 0 sinkt
-        }
-    }
-
-    private void adjustSpeedBasedOnEnergy() {
-        if (energy > 5) {
-            moveCooldown = 1; // Normale Geschwindigkeit
-        } else if (energy > 4) {
-            moveCooldown = 600; // Langsamer, da Energie niedrig ist
-        } else {
-            moveCooldown = 1000; // langsam bei sehr niedriger Energie
+            die();
         }
     }
 
@@ -77,20 +83,18 @@ public class Wolf {
         return energy;
     }
 
-    public int getEatenSheepCount() {
-        return eatenSheepCount;
-    }
-
+    /**
+     * Zeigt Game Over Screen
+     */
     private void die() {
         System.out.println("Der Wolf ist verhungert! Spielende.");
         showGameOverScreen();
     }
 
     private void showGameOverScreen() {
-        // Verwende die neue GameOverView-Klasse, um den "Game Over"-Bildschirm anzuzeigen
-        frame.getContentPane().removeAll(); // Entferne das aktuelle Spiel
+        frame.getContentPane().removeAll();
         GameOverView gameOverView = new GameOverView(frame);
-        frame.getContentPane().add(gameOverView); // Zeige den "Game Over"-Bildschirm
+        frame.getContentPane().add(gameOverView);
         frame.revalidate();
         frame.repaint();
     }

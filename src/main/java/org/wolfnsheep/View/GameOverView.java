@@ -19,7 +19,7 @@ public class GameOverView extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
 
         JLabel gameOverLabel = new JLabel("Game Over! Der Wolf ist verhungert.", JLabel.CENTER);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 14));
         add(gameOverLabel, BorderLayout.CENTER);
 
         JButton restartButton = new JButton("Neustart");
@@ -28,25 +28,29 @@ public class GameOverView extends JPanel implements ActionListener {
         add(restartButton, BorderLayout.SOUTH);
     }
 
+    /**
+     * Neustart des Spiels
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Neustart des Spiels
-        frame.getContentPane().removeAll(); // Entfernt den "Game Over"-Bildschirm
-        GameModel newModel = new GameModel(frame);  // Neues Spielmodel initialisieren
-        GameView newView = new GameView(newModel);     // Neue GameView initialisieren
-        ScoreView newScoreView = new ScoreView(newModel); // Neue ScoreView initialisieren
+        frame.getContentPane().removeAll();
 
-        // Controller mit neuem Modell und neuer Ansicht neu starten
+        GameModel newModel = new GameModel(frame);
+        newModel.reset();
+
+        GameView newView = new GameView(newModel);
+        ScoreView newScoreView = new ScoreView(newModel);
+
         GameController controller = new GameController(newModel, newView, newScoreView);
         controller.restartGame(newModel, newView, newScoreView);
 
-        // Neue Ansicht und ScoreView im Frame anzeigen
         frame.getContentPane().add(newView, BorderLayout.CENTER);
         frame.getContentPane().add(newScoreView, BorderLayout.SOUTH);
-        frame.revalidate(); // Aktualisiert den Frame
+
+        frame.revalidate();
         frame.repaint();
 
-        // Setze den Fokus auf das neue Spielfeld
         newView.requestFocusInWindow();
     }
 }

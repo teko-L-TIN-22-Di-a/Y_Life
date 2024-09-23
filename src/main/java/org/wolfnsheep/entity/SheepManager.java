@@ -7,7 +7,8 @@ import java.util.Random;
 public class SheepManager {
 
     public static final int SHEEP = 1;
-    private int sheepCount = 0;
+    private static int sheepCount = 0;
+    private static int eatenSheepCount = 0;
     private final GameModel game;
     private final Random random = new Random();
 
@@ -16,6 +17,9 @@ public class SheepManager {
     }
 
     public void populateGridWithSheep() {
+        if(eatenSheepCount == 0){
+            sheepCount=0;
+        }
         for (int i = 0; i < GameModel.GRID_WIDTH; i++) {
             for (int j = 0; j < GameModel.GRID_HEIGHT; j++) {
                 if (random.nextDouble() < 0.2) {
@@ -26,9 +30,26 @@ public class SheepManager {
         }
     }
 
-    public int getSheepCount() {
-        return sheepCount;
+    public static void setEatenSheepCount() {
+        eatenSheepCount ++;
     }
+
+    public static void resetCounter(){
+        //sheepCount = 0;
+        eatenSheepCount=0;
+    }
+
+    /**
+     * @return Anzahl gefressener Schafe
+     */
+    public int getEatenSheepCount() {
+        return eatenSheepCount;
+    }
+
+    public static int getSheepCount() {
+        return sheepCount - eatenSheepCount;
+    }
+
 
     public void updateSheepPopulation() {
         int[][] newGrid = new int[GameModel.GRID_WIDTH][GameModel.GRID_HEIGHT];

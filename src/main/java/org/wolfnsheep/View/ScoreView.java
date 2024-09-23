@@ -35,7 +35,7 @@ public class ScoreView extends JPanel {
         int currentSheepCount = model.getCurrentSheepCount();
         // Überprüfe, ob das Spiel gewonnen wurde
         if (currentSheepCount == 0) {
-            g.drawString("Alle Schafe gefressen! Du hast gewonnen!", 10, 50);
+            //g.drawString("Alle Schafe gefressen! Du hast gewonnen!", 10, 50);
         }
         g.drawString("Score: " + model.getScore(), 10, 20);
         g.drawString("Aktuelle Anzahl der Schafe: " + currentSheepCount, 10, 35);

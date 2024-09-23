@@ -1,5 +1,6 @@
 package org.wolfnsheep.View;
 
+import org.wolfnsheep.GameController;
 import org.wolfnsheep.GameModel;
 
 import javax.swing.*;
@@ -21,15 +22,15 @@ public class WinView extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
 
         JLabel winLabel = new JLabel("Du hast gewonnen!", JLabel.CENTER);
-        winLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        winLabel.setFont(new Font("Arial", Font.BOLD, 14));
         add(winLabel, BorderLayout.CENTER);
 
         JLabel scoreLabel = new JLabel("Dein Score: " + score, JLabel.CENTER);
-        scoreLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        scoreLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         add(scoreLabel, BorderLayout.NORTH);
 
         JLabel highscoreLabel = new JLabel("Highscore: " + highscore, JLabel.CENTER);
-        highscoreLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        highscoreLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         add(highscoreLabel, BorderLayout.SOUTH);
 
         JButton restartButton = new JButton("Neustart");
@@ -40,43 +41,67 @@ public class WinView extends JPanel implements ActionListener {
         checkAndSaveHighscore();
     }
 
+    /**
+     * Lädt den Highscore aus einer Datei, wenn sie existiert
+     * Falls die Datei nicht existiert, erstellen wir sie mit einem Standardwert von 0
+     */
     private int loadHighscore() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("highscore.txt"))) {
+        File file = new File("highscore.txt");
+        if (!file.exists()) {
+            saveHighscore(0);
+            return 0;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             return Integer.parseInt(reader.readLine());
-        } catch (IOException e) {
-            return 0;  // Kein Highscore vorhanden
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
+    /**
+     * Prüft, ob der aktuelle Score der höchste ist, und speichert ihn, falls ja
+     */
     private void checkAndSaveHighscore() {
         if (score > highscore) {
             highscore = score;
-            saveHighscore();
+            saveHighscore(highscore);
         }
     }
 
-    private void saveHighscore() {
+    /**
+     * Speichert den neuen Highscore in eine Datei
+     */
+    private void saveHighscore(int newHighscore) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("highscore.txt"))) {
-            writer.write(String.valueOf(highscore));
+            writer.write(String.valueOf(newHighscore));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Neustart des Spiels
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Neustart des Spiels
         frame.getContentPane().removeAll();
-        GameModel newModel = new GameModel(frame);  // Neues Spielmodel initialisieren
-        GameView newView = new GameView(newModel);     // Neue GameView initialisieren
-        ScoreView newScoreView = new ScoreView(newModel); // Neue ScoreView initialisieren
-        //GameController controller = new GameController(newModel, newView, newScoreView); // Neuen GameController starten
+
+        GameModel newModel = new GameModel(frame);
+        newModel.reset();
+
+        GameView newView = new GameView(newModel);
+        ScoreView newScoreView = new ScoreView(newModel);
+        GameController controller = new GameController(newModel, newView, newScoreView);
+        controller.restartGame(newModel, newView, newScoreView);
 
         frame.getContentPane().add(newView, BorderLayout.CENTER);
         frame.getContentPane().add(newScoreView, BorderLayout.SOUTH);
+
         frame.revalidate();
         frame.repaint();
 
-        newView.requestFocusInWindow();  // Fokus auf das neue Spielfeld setzen
+        newView.requestFocusInWindow();
     }
 }

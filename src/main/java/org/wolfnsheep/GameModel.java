@@ -6,7 +6,7 @@ import org.wolfnsheep.entity.Wolf;
 import javax.swing.*;
 
 /**
- * Das GameModel verwaltet den Zustand des Spiels, einschließlich des Gitters, den Wolf und die Schafe.
+ * Das GameModel initialisiert und verwaltet das Spielfeld.
  */
 public class GameModel {
     public static final int GRID_WIDTH = 20;
@@ -22,6 +22,10 @@ public class GameModel {
         wolf = new Wolf(GRID_WIDTH / 2, GRID_HEIGHT / 2, this, frame);
     }
 
+    /**
+     * Initialisiert das Spielfeld mit Wolf und Schafen
+     * @param frame
+     */
     private void initializeGame(JFrame frame) {
         wolf = new Wolf(GRID_WIDTH / 2, GRID_HEIGHT / 2, this, frame);
         sheepManager = new SheepManager(this);
@@ -41,21 +45,37 @@ public class GameModel {
     }
 
     /**
-     * holt den aktuellen zustand des Wolfs
+     * Zustand des Wolfs
      */
     public Wolf getWolf() {
         return wolf;
     }
 
+    /**
+     * Aktueller Score
+     * @return
+     */
     public int getScore() {
-        return wolf.getEatenSheepCount();
+        return sheepManager.getEatenSheepCount();
     }
 
+    /**
+     * Anzahl Schafe auf Spielfeld
+     * @return
+     */
     public int getCurrentSheepCount() {
-        return sheepManager.getSheepCount();
+        return SheepManager.getSheepCount();
     }
 
+    /**
+     * Updatet Game of Life Zyklus der Schafe
+     */
     public void updateGameOfLife() {
         sheepManager.updateSheepPopulation();
     }
-}
+
+    public void reset() {
+        SheepManager.resetCounter();
+        initializeGame(new JFrame());
+        }
+    }

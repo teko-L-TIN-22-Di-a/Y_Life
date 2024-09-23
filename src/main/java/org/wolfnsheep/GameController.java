@@ -2,12 +2,16 @@ package org.wolfnsheep;
 
 import org.wolfnsheep.View.GameView;
 import org.wolfnsheep.View.ScoreView;
+import org.wolfnsheep.View.WinView;
+import org.wolfnsheep.entity.SheepManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import static org.wolfnsheep.WolfAndSheepGame.frame;
 
 /**
  * Der GameController handelt Benutzereingaben und Timer-Ereignisse, um das Spiel zu steuern.
@@ -53,8 +57,28 @@ public class GameController implements KeyListener, ActionListener {
             case KeyEvent.VK_UP -> model.moveWolf(0, -1);
             case KeyEvent.VK_DOWN -> model.moveWolf(0, 1);
         }
+
+        if (isGameWon()) {
+            showWinScreen();
+        }
+
         view.repaint();
         scoreView.repaint();
+    }
+
+    private void showWinScreen() {
+        //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(view);
+        frame.getContentPane().removeAll();
+
+        WinView winView = new WinView(frame, model.getScore());
+        frame.getContentPane().add(winView);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private boolean isGameWon(){
+        return model.getCurrentSheepCount() == 0;
     }
 
     /**
@@ -81,12 +105,12 @@ public class GameController implements KeyListener, ActionListener {
             timer.stop();
         }
 
-        // Aktualisiere das Modell, die Ansicht und die ScoreView
         this.model = newModel;
         this.view = newView;
         this.scoreView = newScoreView;
 
-        // Setup Game erneut aufrufen, um den KeyListener und Timer neu zu registrieren
+        SheepManager.resetCounter();
+
         setupGame();
     }
 
