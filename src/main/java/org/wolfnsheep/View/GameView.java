@@ -13,7 +13,7 @@ public class GameView extends JPanel {
     private final GameModel model;
 
     /**
-     * Konstruktor für die GameView, der das Modell setzt und die Grösse der Ansicht festlegt.
+     * Setzt Modell und die Grösse der Ansicht festlegt.
      *
      * @param model das Spielfeld
      */
