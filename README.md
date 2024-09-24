@@ -1,4 +1,5 @@
 # Y_Life
+![image](https://github.com/user-attachments/assets/57819bbf-d2d6-429f-b5d0-2cd5991f23dc)
 
 ### Hintergrund:
 Das Projekt zielt darauf ab, das klassische Conway's Game of Life etwas abzuwandeln um neue Kentnisse in der Programmiersprache Java, Swing/AWT und DesignPatterns zu erhalten.
