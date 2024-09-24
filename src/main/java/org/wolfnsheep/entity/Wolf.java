@@ -5,6 +5,10 @@ import org.wolfnsheep.View.GameOverView;
 
 import javax.swing.*;
 
+/**
+ * Enthält alle Logik die zum Wolf gehört
+ * Die Bewegung, die Position, die Anzahl gefressener Schaffe und
+ */
 public class Wolf {
     private int x, y;
     private int energy = 10;
@@ -16,12 +20,10 @@ public class Wolf {
     public static final int ENERGY_GAIN_FROM_SHEEP = 5;
 
     /**
-     * Enthält alle Logik die zum Wolf gehört
-     * Die Bewegung, die Position, die Anzahl gefressener Schaffe und
-     * @param startX
-     * @param startY
-     * @param game
-     * @param frame
+     * @param startX AnfangsX-Koordinate des Wolfs
+     * @param startY AnfangsY-Koordinate des Wolfs
+     * @param game Aktuelles Game model
+     * @param frame Aktueller Frame
      */
 
     public Wolf(int startX, int startY, GameModel game, JFrame frame) {
@@ -34,8 +36,8 @@ public class Wolf {
 
     /**
      * Steuerung des Wolfs
-     * @param dx
-     * @param dy
+     * @param dx aktuelle x-Position
+     * @param dy aktuelle y-Position
      */
     public void move(int dx, int dy) {
         int newX = Math.max(0, Math.min(GameModel.GRID_WIDTH - 1, x + dx));
@@ -46,6 +48,11 @@ public class Wolf {
         decreaseEnergy();
     }
 
+    /**
+     * Setzt die neue Position
+     * @param newX neue x-Position
+     * @param newY neue y-Position
+     */
     private void setNewPosition(int newX, int newY) {
         game.setCell(x, y, 0);
         x = newX;
@@ -53,6 +60,11 @@ public class Wolf {
         game.setCell(x, y, -1);
     }
 
+    /**
+     * Schaf wird gefressen wenn es sich auf neuer Position befindet
+     * @param newX neue x-Position
+     * @param newY neue y-Position
+     */
     private void eatSheepWhenOnNewPosition(int newX, int newY) {
         if (game.getCell(newX, newY) == SheepManager.SHEEP) {
             eatSheep();
@@ -70,6 +82,7 @@ public class Wolf {
     }
 
     /**
+     * Verringert die Energie
      * Wolf stirbt, wenn Energie auf 0 sinkt
      */
     private void decreaseEnergy() {
@@ -84,13 +97,16 @@ public class Wolf {
     }
 
     /**
-     * Zeigt Game Over Screen
+     * Wolf stirbt
      */
     private void die() {
         System.out.println("Der Wolf ist verhungert! Spielende.");
         showGameOverScreen();
     }
 
+    /**
+     * Zeigt Game Over Screen
+     */
     private void showGameOverScreen() {
         frame.getContentPane().removeAll();
         GameOverView gameOverView = new GameOverView(frame);
