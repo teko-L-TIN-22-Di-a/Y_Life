@@ -18,3 +18,6 @@ In diesem Projekt ist dies die momentane Logik welche die Schafe befolgen
 ### Weitere States
 Der Wolf wird vom Spieler bewegt und (wird) die folgenden States enthalten
 ![img_1.png](img_1.png)
+
+### JavaDoc
+https://teko-l-tin-22-di-a.github.io/Y_Life/
